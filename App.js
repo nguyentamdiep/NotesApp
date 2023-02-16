@@ -67,7 +67,7 @@ const HomeScreen = ({navigation}) => {
       value={textSearch}
       placeholder="search note"
       />
-      <Text>(Pull down to update Notes)</Text>
+      <Text>(Pull down or press 'Display Notes' to update Notes)</Text>
         
         <TouchableOpacity
           onPress={() =>{setListNote1(ListNote), setTotalNotes(ListNote.length) }}
