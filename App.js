@@ -122,7 +122,7 @@ const HomeScreen = ({ navigation }) => {
                 borderRadius: 5
               }}
             >
-              <Text>{item['value'].substring(0, 15) + "..."}</Text>
+              <Text>{item['value'].substring(0, 30) + "..."}</Text>
             </TouchableOpacity>
 
           )
@@ -159,7 +159,7 @@ const NewNoteScreen = ({ navigation }) => {
       />
 
       <TouchableOpacity
-        onPress={() => { ListNote.push({ 'key': ListNote.length + 1, 'value': text }), storeData(ListNote), navigation.navigate('Home') }
+        onPress={() => { ListNote.unshift({ 'key': ListNote.length + 1, 'value': text }), storeData(ListNote), navigation.navigate('Home') }
         }
         style={{
           backgroundColor: 'pink',
