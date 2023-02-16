@@ -230,7 +230,7 @@ const EditScreen = ({ navigation, route }) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => { ListNote.map(item => { if (item['key'] == route.params.item['key']) { ListNote.splice(ListNote.indexOf(item), 1) } }), storeData(ListNote), navigation.navigate('Home'), console.log(ListNote) }}
+          onPress={() => { ListNote.map(item => { if (item['key'] == route.params.item['key']) { ListNote.splice(ListNote.indexOf(item), 1) } }), storeData(ListNote), navigation.navigate('Home') }}
           style={{
             backgroundColor: '#FAEBD7',
             color: 'white',
