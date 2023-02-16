@@ -38,7 +38,7 @@ const HomeScreen = ({ navigation }) => {
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
-    }, 1000);
+    }, 2000);
   }, []);
 
   return (
