@@ -7,7 +7,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Stack = createNativeStackNavigator();
 let ListNote = [];
 getData(ListNote).then(value => { ListNote = value });
-console.log(ListNote);
 
 export default function App() {
   return (
@@ -39,7 +38,7 @@ const HomeScreen = ({ navigation }) => {
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
-    }, 200);
+    }, 1000);
   }, []);
 
   return (
@@ -71,82 +70,83 @@ const HomeScreen = ({ navigation }) => {
       <Text>(Pull down or press 'Display Notes' to update Notes)</Text>
 
       <View
-        style = {{
+        style={{
           flex: 1,
           flexDirection: 'row'
         }}
       >
-      <TouchableOpacity
-        onPress={() => { setListNote1(ListNote), setTotalNotes(ListNote.length) }}
-        style={{
-          backgroundColor: '#FAEBD7',
-          color: 'white',
-          padding: 10,
-          margin: 10,
-          width: '31%',
-          borderRadius: 5
-        }}
-      >
-        <Text>Display Notes:</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => { setListNote1(ListNote), setTotalNotes(ListNote.length) }}
+          style={{
+            backgroundColor: '#FAEBD7',
+            color: 'white',
+            padding: 10,
+            margin: 10,
+            width: '31%',
+            borderRadius: 5
+          }}
+        >
+          <Text>Display Notes:</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate('NewNote')}
-        style={{
-          backgroundColor: '#FAEBD7',
-          color: 'white',
-          padding: 10,
-          margin: 10,
-          width: '30%',
-          borderRadius: 5
-        }}
-      >
-        <Text>Add Note</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('NewNote')}
+          style={{
+            backgroundColor: '#FAEBD7',
+            color: 'white',
+            padding: 10,
+            margin: 10,
+            width: '30%',
+            borderRadius: 5
+          }}
+        >
+          <Text>Add Note</Text>
+        </TouchableOpacity>
 
       </View>
-      
+
       <Text> {"Số lượng các ghi chú: " + totalNotes}</Text>
 
       <View
-      style={{
-        flex: 1,
-      }}
+        style={{
+          flex: 1,
+          padding: 5
+        }}
       >
         <View
-        style ={{
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-        }}
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+          }}
         >
           {
-        ListNote1.map(
-          (item) => (
-            <TouchableOpacity
-              key={ListNote.indexOf(item) + Math.random()}
-              onPress={() =>
-                navigation.navigate('EditNote', { item: item })
-              }
-              style={{
-                backgroundColor: 'pink',
-                padding: 10,
-                margin: 10,
-                borderRadius: 5,
-                width: '40%',
+            ListNote1.map(
+              (item) => (
+                <TouchableOpacity
+                  key={ListNote.indexOf(item) + Math.random()}
+                  onPress={() =>
+                    navigation.navigate('EditNote', { item: item })
+                  }
+                  style={{
+                    backgroundColor: 'pink',
+                    padding: 10,
+                    margin: 10,
+                    borderRadius: 5,
+                    width: '40%',
 
-              }}
-            >
-              <Text>{item['value'].substring(0, 30) + "..."}</Text>
-            </TouchableOpacity>
+                  }}
+                >
+                  <Text>{item['value'].substring(0, 30) + "..."}</Text>
+                </TouchableOpacity>
 
-          )
+              )
 
-        )
-      }
+            )
+          }
         </View>
-        
+
       </View>
-      
+
 
     </ScrollView>
 
@@ -209,41 +209,41 @@ const EditScreen = ({ navigation, route }) => {
       />
 
       <View
-      style={{
-        flex: 1,
-        flexDirection: 'row'
-      }}
+        style={{
+          flex: 1,
+          flexDirection: 'row'
+        }}
       >
         <TouchableOpacity
-        onPress={() => { ListNote.map(item => { if (item['key'] == route.params.item['key']) { item['value'] = text } }), storeData(ListNote), navigation.navigate('Home') }}
-        style={{
-          backgroundColor: '#FAEBD7',
-          color: 'white',
-          padding: 10,
-          margin: 10,
-          width: '30%',
-          borderRadius: 5
-        }}
-      >
-        <Text>Save</Text>
-      </TouchableOpacity>
+          onPress={() => { ListNote.map(item => { if (item['key'] == route.params.item['key']) { item['value'] = text } }), storeData(ListNote), navigation.navigate('Home') }}
+          style={{
+            backgroundColor: '#FAEBD7',
+            color: 'white',
+            padding: 10,
+            margin: 10,
+            width: '30%',
+            borderRadius: 5
+          }}
+        >
+          <Text>Save</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        onPress={() => { ListNote.map(item => { if (item['key'] == route.params.item['key']) { ListNote.splice(ListNote.indexOf(item), 1) } }), storeData(ListNote), navigation.navigate('Home'), console.log(ListNote) }}
-        style={{
-          backgroundColor: '#FAEBD7',
-          color: 'white',
-          padding: 10,
-          margin: 10,
-          width: '30%',
-          borderRadius: 5
-        }}
-      >
-        <Text>Delete</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => { ListNote.map(item => { if (item['key'] == route.params.item['key']) { ListNote.splice(ListNote.indexOf(item), 1) } }), storeData(ListNote), navigation.navigate('Home'), console.log(ListNote) }}
+          style={{
+            backgroundColor: '#FAEBD7',
+            color: 'white',
+            padding: 10,
+            margin: 10,
+            width: '30%',
+            borderRadius: 5
+          }}
+        >
+          <Text>Delete</Text>
+        </TouchableOpacity>
       </View>
 
-      
+
 
     </ScrollView>
   );
