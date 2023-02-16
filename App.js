@@ -214,7 +214,7 @@ const NewNoteScreen=({navigation})=>{
 async function storeData(value) {
   try {
     const jsonValue = JSON.stringify(value);
-    await AsyncStorage.setItem('@storage_Key55', jsonValue);
+    await AsyncStorage.setItem('@storage_Key5578', jsonValue);
     console.log('luu thanh cong');
   } catch {
     // saving error
@@ -224,7 +224,7 @@ async function storeData(value) {
 
 async function getData(ListNote){
   try{
-    const value = await AsyncStorage.getItem('@storage_Key55')
+    const value = await AsyncStorage.getItem('@storage_Key5578')
     if (value !== null) {
       ListNote =JSON.parse(value);
       console.log("read data thanh cong");
