@@ -107,7 +107,19 @@ const HomeScreen = ({ navigation }) => {
       </View>
       
       <Text> {"Số lượng các ghi chú: " + totalNotes}</Text>
-      {
+
+      <View
+      style={{
+        flex: 1,
+      }}
+      >
+        <View
+        style ={{
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+        }}
+        >
+          {
         ListNote1.map(
           (item) => (
             <TouchableOpacity
@@ -119,7 +131,12 @@ const HomeScreen = ({ navigation }) => {
                 backgroundColor: 'pink',
                 padding: 10,
                 margin: 10,
-                borderRadius: 5
+                borderRadius: 5,
+               // flex: 1,
+              //  flexDirection: 'row',
+                width: '35%',
+               // flexWrap: 'wrap'
+
               }}
             >
               <Text>{item['value'].substring(0, 30) + "..."}</Text>
@@ -129,9 +146,10 @@ const HomeScreen = ({ navigation }) => {
 
         )
       }
-
+        </View>
+        
+      </View>
       
-
 
     </ScrollView>
 
