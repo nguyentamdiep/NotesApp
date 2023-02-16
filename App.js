@@ -67,7 +67,7 @@ const HomeScreen = ({ navigation }) => {
         placeholder="search note"
       />
 
-      <Text>(Pull down or press 'Display Notes' to update Notes)</Text>
+      <Text>(Press 'Display Notes' to show all notes. Press 'Display Notes' after add new a note/edit note/delete note to update newest data)</Text>
 
       <View
         style={{
@@ -100,7 +100,7 @@ const HomeScreen = ({ navigation }) => {
             borderRadius: 5
           }}
         >
-          <Text>Add Note</Text>
+          <Text>New Note</Text>
         </TouchableOpacity>
 
       </View>
