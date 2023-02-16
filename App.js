@@ -132,10 +132,7 @@ const HomeScreen = ({ navigation }) => {
                 padding: 10,
                 margin: 10,
                 borderRadius: 5,
-               // flex: 1,
-              //  flexDirection: 'row',
-                width: '35%',
-               // flexWrap: 'wrap'
+                width: '40%',
 
               }}
             >
