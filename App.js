@@ -87,7 +87,7 @@ const HomeScreen = ({navigation}) => {
         ListNote1.map(
           (item)=>(
               <TouchableOpacity
-                key = {item['key']}
+                key = {ListNote.indexOf(item)}
                 onPress={() =>
                   navigation.navigate('EditNote', {item:item})
                 }
