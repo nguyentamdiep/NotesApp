@@ -42,12 +42,7 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <ScrollView
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
-    >
-
+    <View>
       <TextInput
         style={{
           height: 40,
@@ -67,88 +62,94 @@ const HomeScreen = ({ navigation }) => {
         placeholder="search note"
       />
 
-      <Text>(Press 'Display Notes' to show all notes. Press 'Display Notes' after add new a note/edit note/delete note to update newest data)</Text>
-
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row'
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => { setListNote1(ListNote), setTotalNotes(ListNote.length) }}
-          style={{
-            backgroundColor: '#FAEBD7',
-            color: 'white',
-            padding: 10,
-            margin: 10,
-            width: '31%',
-            borderRadius: 5
-          }}
-        >
-          <Text>Display Notes:</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => navigation.navigate('NewNote')}
-          style={{
-            backgroundColor: '#FAEBD7',
-            color: 'white',
-            padding: 10,
-            margin: 10,
-            width: '30%',
-            borderRadius: 5
-          }}
-        >
-          <Text>New Note</Text>
-        </TouchableOpacity>
-
-      </View>
-
-      <Text> {"Số lượng các ghi chú: " + totalNotes}</Text>
-
-      <View
-        style={{
-          flex: 1,
-          padding: 5
-        }}
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       >
         <View
           style={{
+            flex: 1,
             flexDirection: 'row',
-            flexWrap: 'wrap',
           }}
         >
-          {
-            ListNote1.map(
-              (item) => (
-                <TouchableOpacity
-                  key={ListNote.indexOf(item) + Math.random()}
-                  onPress={() =>
-                    navigation.navigate('EditNote', { item: item })
-                  }
-                  style={{
-                    backgroundColor: 'pink',
-                    padding: 10,
-                    margin: 10,
-                    borderRadius: 5,
-                    width: '40%',
+          <TouchableOpacity
+            onPress={() => { setListNote1(ListNote), setTotalNotes(ListNote.length) }}
+            style={{
+              backgroundColor: '#FAEBD7',
+              color: 'white',
+              padding: 10,
+              margin: 10,
+              width: '31%',
+              borderRadius: 5
+            }}
+          >
+            <Text>Display Notes:</Text>
+          </TouchableOpacity>
 
-                  }}
-                >
-                  <Text>{item['value'].substring(0, 30) + "..."}</Text>
-                </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('NewNote')}
+            style={{
+              backgroundColor: '#FAEBD7',
+              color: 'white',
+              padding: 10,
+              margin: 10,
+              width: '30%',
+              borderRadius: 5
+            }}
+          >
+            <Text>New Note</Text>
+          </TouchableOpacity>
+
+        </View>
+        <Text>(Press 'Display Notes' to show all notes. Pull Down or Press 'Display Notes' after add new a note/edit note/delete note to update newest data)</Text>
+
+        <Text> {"Số lượng các ghi chú: " + totalNotes}</Text>
+
+        <View
+          style={{
+            flex: 1,
+            padding: 5
+          }}
+        >
+          <View
+            style={{
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+            }}
+          >
+            {
+              ListNote1.map(
+                (item) => (
+                  <TouchableOpacity
+                    key={ListNote.indexOf(item) + Math.random()}
+                    onPress={() =>
+                      navigation.navigate('EditNote', { item: item })
+                    }
+                    style={{
+                      backgroundColor: 'pink',
+                      padding: 10,
+                      margin: 10,
+                      borderRadius: 5,
+                      width: '40%',
+
+                    }}
+                  >
+                    <Text>{item['value'].substring(0, 30) + "..."}</Text>
+                  </TouchableOpacity>
+
+                )
 
               )
+            }
+          </View>
 
-            )
-          }
         </View>
 
-      </View>
 
+      </ScrollView>
 
-    </ScrollView>
+    </View>
 
   );
 };
