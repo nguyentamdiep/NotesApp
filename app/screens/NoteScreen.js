@@ -67,7 +67,7 @@ const NoteScreen = ({ user, navigation }) => {
       return await findNotes();
     }
     const filteredNotes = notes.filter(note => {
-      if (note.title.toLowerCase().includes(text.toLowerCase())) {
+      if (note.title.toLowerCase().includes(text.toLowerCase()) || note.desc.toLowerCase().includes(text.toLowerCase())) {
         return note;
       }
     });
@@ -90,7 +90,7 @@ const NoteScreen = ({ user, navigation }) => {
       <StatusBar barStyle='dark-content' backgroundColor={colors.LIGHT} />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-          <Text style={styles.header}>{`Good ${greet} ${user.name}`}</Text>
+          <Text style={styles.header}>{`Good ${greet}`}</Text>
           {notes.length ? (
             <SearchBar
               value={searchQuery}

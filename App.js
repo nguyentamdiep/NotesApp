@@ -28,16 +28,16 @@ export default function App() {
     findUser();
   }, []);
 
-  const renderNoteScreen = props => <NoteScreen {...props} user={user} />;
+  const RenderNoteScreen = props => <NoteScreen {...props} user={user} />;
 
-  if (isAppFirstTimeOpen) return <Intro onFinish={findUser} />;
+  //if (isAppFirstTimeOpen) return <Intro onFinish={findUser} />;
   return (
     <NavigationContainer>
       <NoteProvider>
         <Stack.Navigator
           screenOptions={{ headerTitle: '', headerTransparent: true }}
         >
-          <Stack.Screen component={renderNoteScreen} name='NoteScreen' />
+          <Stack.Screen component={RenderNoteScreen} name='NoteScreen' />
           <Stack.Screen component={NoteDetail} name='NoteDetail' />
         </Stack.Navigator>
       </NoteProvider>
