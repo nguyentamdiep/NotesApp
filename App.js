@@ -30,7 +30,7 @@ export default function App() {
 
   const renderNoteScreen = props => <NoteScreen {...props} user={user} />;
 
-  if (isAppFirstTimeOpen) return <Intro onFinish={findUser} />;
+  //if (isAppFirstTimeOpen) return <Intro onFinish={findUser} />;
   return (
     <NavigationContainer>
       <NoteProvider>
