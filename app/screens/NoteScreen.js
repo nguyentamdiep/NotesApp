@@ -145,6 +145,7 @@ const NoteScreen = ({ user, navigation }) => {
 
 const styles = StyleSheet.create({
   header: {
+    padding: 20,
     fontSize: 25,
     fontWeight: 'bold',
   },
