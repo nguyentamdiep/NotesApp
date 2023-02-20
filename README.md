@@ -1,7 +1,7 @@
 # NotesApp
 
 ## Team members:
-Nhóm 4: 
+Nhóm N04: 
 | No.  | Name                | Student ID | Email                | github username| 
 | -----| --------------------| ---------- |----------------------|----------------|
 | 1    |Phạm Tấn Tài         |20521861    |20521861@gm.uit.edu.vn|tai040102       |
