@@ -17,6 +17,9 @@ import SearchBar from '../components/SearchBar';
 import { useNotes } from '../contexts/NoteProvider';
 import colors from '../misc/colors';
 
+import ColorPaletteIconBtn from '../components/ColorPaletteIconBtn';
+import ColorPaletteModal from '../components/ColorPaletteModal';
+
 const reverseData = data => {
   return data.sort((a, b) => {
     const aInt = parseInt(a.time);
@@ -32,6 +35,9 @@ const NoteScreen = ({ user, navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [resultNotFound, setResultNotFound] = useState(false);
+
+  const [colorPaletteModalVisible, setColorPaletteModalVisible] = useState('false');
+  const [backgroundColor, setBackGroundColor] = useState('');
 
   const { notes, setNotes, findNotes } = useNotes();
 
@@ -54,6 +60,31 @@ const NoteScreen = ({ user, navigation }) => {
     setNotes(updatedNotes);
     await AsyncStorage.setItem('notes', JSON.stringify(updatedNotes));
   };
+
+  const handleOnSelect = async (color) =>{
+    setBackGroundColor(color);
+    await AsyncStorage.setItem('backgroundcolor', JSON.stringify(color));
+  //  console.log('luu backgroundcolor thanh cong')
+  }
+  const getBackGroundColor=async ()=>{
+    try {
+      const color = await AsyncStorage.getItem('backgroundcolor')
+      if(color !== null) {
+        // value previously stored
+        setBackGroundColor(JSON.parse(color));
+      //  console.log('read background color thanh cong')
+       // console.log(backgroundColor);
+      }
+    } catch {
+      // error reading value
+      //return '';
+      console.log('read backgroundcolor that bai')
+
+    }
+  }
+  useEffect(() => {
+    getBackGroundColor();
+  }, []);
 
   const openNote = note => {
     navigation.navigate('NoteDetail', { note });
@@ -112,7 +143,7 @@ const NoteScreen = ({ user, navigation }) => {
               }}
               keyExtractor={item => item.id.toString()}
               renderItem={({ item }) => (
-                <Note onPress={() => openNote(item)} item={item} />
+                <Note backgroundColor={backgroundColor} onPress={() => openNote(item)} item={item} />
               )}
             />
           )}
@@ -129,16 +160,39 @@ const NoteScreen = ({ user, navigation }) => {
           ) : null}
         </View>
       </TouchableWithoutFeedback>
+
+      <View style={styles.btnContainer}>
       <RoundIconBtn
         onPress={() => setModalVisible(true)}
         antIconName='plus'
-        style={styles.addBtn}
+        //style={styles.addBtn}
+        style={{marginBottom: 15}}
       />
+      
+      <ColorPaletteIconBtn
+        onPress={() => {setColorPaletteModalVisible(true)}}
+        ionIconName='color-palette-outline'
+        //style={styles.addBtn}
+        style={{marginBottom: 15}}
+      />
+      </View>
+
+      
       <NoteInputModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
         onSubmit={handleOnSubmit}
       />
+
+      <ColorPaletteModal
+        visible={colorPaletteModalVisible}
+        onClose={() => setColorPaletteModalVisible(false)}
+        onSelect={handleOnSelect}
+      //  onSubmit={handleOnSubmit}
+      />
+
+
+
     </>
   );
 };
@@ -172,6 +226,14 @@ const styles = StyleSheet.create({
     bottom: 50,
     zIndex: 1,
   },
+
+  btnContainer: {
+    position: 'absolute',
+    right: 15,
+    bottom: 50,
+    zIndex: 1,
+  },
+
 });
 
 export default NoteScreen;

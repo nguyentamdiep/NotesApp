@@ -8,10 +8,10 @@ import {
 } from 'react-native';
 import colors from '../misc/colors';
 
-const Note = ({ item, onPress }) => {
+const Note = ({ item, onPress, backgroundColor }) => {
   const { title, desc } = item;
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container}>
+    <TouchableOpacity onPress={onPress} style={[styles.container, {backgroundColor:backgroundColor || colors.PRIMARY}]}>
       <Text style={styles.title} numberOfLines={2}>
         {title}
       </Text>
