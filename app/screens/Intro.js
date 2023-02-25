@@ -7,10 +7,11 @@ import {
   TextInput,
   StatusBar,
   Dimensions,
+  ImageBackground
 } from 'react-native';
 import RoundIconBtn from '../components/RoundIconBtn';
 import colors from '../misc/colors';
-
+const imbackground = {uri: 'https://treobangron.com.vn/wp-content/uploads/2022/09/background-dep-3-2.jpg'}
 const Intro = ({ onFinish }) => {
   const [name, setName] = useState('');
   const handleOnChangeText = text => setName(text);
@@ -23,6 +24,7 @@ const Intro = ({ onFinish }) => {
 
   return (
     <>
+    <ImageBackground source={imbackground} resizeMode={'cover'} style={{flex: 1, }}>
       <StatusBar hidden />
       <View style={styles.container}>
         <Text style={styles.inputTitle}>Enter Your Name to Continue</Text>
@@ -36,6 +38,7 @@ const Intro = ({ onFinish }) => {
           <RoundIconBtn antIconName='arrowright' onPress={handleSubmit} />
         ) : null}
       </View>
+      </ImageBackground>
     </>
   );
 };
