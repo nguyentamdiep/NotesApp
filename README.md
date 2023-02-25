@@ -16,6 +16,6 @@ npm install @react-navigation/stack
 npm install @react-navigation/native @react-navigation/native-stack
 npm install react-native-screens react-native-safe-area-context
 npm install @react-native-async-storage/async-storage
-npm i react-native-radio-buttons-group --save
+npm install react-native-radio-buttons-group
 npx expo start
 ```
