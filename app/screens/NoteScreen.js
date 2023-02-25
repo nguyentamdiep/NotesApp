@@ -37,8 +37,8 @@ const NoteScreen = ({ user, navigation }) => {
   const [resultNotFound, setResultNotFound] = useState(false);
 
   const [colorPaletteModalVisible, setColorPaletteModalVisible] = useState('false');
+  const [colorNote, setColorNote] = useState('');
   const [backgroundColor, setBackGroundColor] = useState('');
-
   const { notes, setNotes, findNotes } = useNotes();
 
   const findGreet = () => {
@@ -61,11 +61,35 @@ const NoteScreen = ({ user, navigation }) => {
     await AsyncStorage.setItem('notes', JSON.stringify(updatedNotes));
   };
 
-  const handleOnSelect = async (color) =>{
-    setBackGroundColor(color);
-    await AsyncStorage.setItem('backgroundcolor', JSON.stringify(color));
+  const handleOnSelect = async (color, backgroundSelected) =>{
+    if (backgroundSelected === false){
+      setColorNote(color);
+      await AsyncStorage.setItem('colornote', JSON.stringify(color));
+    }
+    else{
+      setBackGroundColor(color);
+      await AsyncStorage.setItem('backgroundcolor', JSON.stringify(color));
+    }
+    
   //  console.log('luu backgroundcolor thanh cong')
   }
+  const getColorNote=async ()=>{
+    try {
+      const color = await AsyncStorage.getItem('colornote')
+      if(color !== null) {
+        // value previously stored
+        setColorNote(JSON.parse(color));
+      //  console.log('read background color thanh cong')
+       // console.log(backgroundColor);
+      }
+    } catch {
+      // error reading value
+      //return '';
+      console.log('read colornote that bai')
+
+    }
+  }
+
   const getBackGroundColor=async ()=>{
     try {
       const color = await AsyncStorage.getItem('backgroundcolor')
@@ -78,11 +102,12 @@ const NoteScreen = ({ user, navigation }) => {
     } catch {
       // error reading value
       //return '';
-      console.log('read backgroundcolor that bai')
+      console.log('read colornote that bai')
 
     }
   }
   useEffect(() => {
+    getColorNote();
     getBackGroundColor();
   }, []);
 
@@ -118,9 +143,9 @@ const NoteScreen = ({ user, navigation }) => {
 
   return (
     <>
-      <StatusBar barStyle='dark-content' backgroundColor={colors.LIGHT} />
+      <StatusBar barStyle='dark-content' backgroundColor={colors.PRIMARY} />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.container}>
+        <View style={[styles.container, {backgroundColor:backgroundColor|| 'white'}]}>
           <Text style={styles.header}>{`Good ${greet} ${user.name}`}</Text>
           {notes.length ? (
             <SearchBar
@@ -143,7 +168,7 @@ const NoteScreen = ({ user, navigation }) => {
               }}
               keyExtractor={item => item.id.toString()}
               renderItem={({ item }) => (
-                <Note backgroundColor={backgroundColor} onPress={() => openNote(item)} item={item} />
+                <Note backgroundColor={colorNote} onPress={() => openNote(item)} item={item} />
               )}
             />
           )}
