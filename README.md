@@ -17,5 +17,8 @@ npm install @react-navigation/native @react-navigation/native-stack
 npm install react-native-screens react-native-safe-area-context
 npm install @react-native-async-storage/async-storage
 npm install react-native-radio-buttons-group
+expo install expo-notifications
+expo install expo-device
+npm install @react-native-community/datetimepicker --save
 npx expo start
 ```

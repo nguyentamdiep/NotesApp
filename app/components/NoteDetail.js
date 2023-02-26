@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text, View, Alert } from 'react-native';
-import { useHeaderHeight } from '@react-navigation/elements';
-import colors from '../misc/colors';
-import RoundIconBtn from './RoundIconBtn';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNotes } from '../contexts/NoteProvider';
-import NoteInputModal from './NoteInputModal';
-
-const formatDate = ms => {
+import React, { useState,useEffect } from "react";
+import { ScrollView, StyleSheet, Text, View, Alert } from "react-native";
+import { useHeaderHeight } from "@react-navigation/elements";
+import colors from "../misc/colors";
+import RoundIconBtn from "./RoundIconBtn";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNotes } from "../contexts/NoteProvider";
+import NoteInputModal from "./NoteInputModal";
+const formatDate = (ms) => {
   const date = new Date(ms);
   const day = date.getDate();
   const month = date.getMonth() + 1;
@@ -19,36 +18,37 @@ const formatDate = ms => {
   return `${day}/${month}/${year} - ${hrs}:${min}:${sec}`;
 };
 
-const NoteDetail = props => {
+const NoteDetail = (props) => {
   const [note, setNote] = useState(props.route.params.note);
   const headerHeight = useHeaderHeight();
   const { setNotes } = useNotes();
   const [showModal, setShowModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [textNotify, setTextNotify] = useState("");
 
   const deleteNote = async () => {
-    const result = await AsyncStorage.getItem('notes');
+    const result = await AsyncStorage.getItem("notes");
     let notes = [];
     if (result !== null) notes = JSON.parse(result);
 
-    const newNotes = notes.filter(n => n.id !== note.id);
+    const newNotes = notes.filter((n) => n.id !== note.id);
     setNotes(newNotes);
-    await AsyncStorage.setItem('notes', JSON.stringify(newNotes));
+    await AsyncStorage.setItem("notes", JSON.stringify(newNotes));
     props.navigation.goBack();
   };
 
   const displayDeleteAlert = () => {
     Alert.alert(
-      'Are You Sure!',
-      'This action will delete your note permanently!',
+      "Are You Sure!",
+      "This action will delete your note permanently!",
       [
         {
-          text: 'Delete',
+          text: "Delete",
           onPress: deleteNote,
         },
         {
-          text: 'No Thanks',
-          onPress: () => console.log('no thanks'),
+          text: "No Thanks",
+          onPress: () => console.log("no thanks"),
         },
       ],
       {
@@ -58,11 +58,11 @@ const NoteDetail = props => {
   };
 
   const handleUpdate = async (title, desc, time) => {
-    const result = await AsyncStorage.getItem('notes');
+    const result = await AsyncStorage.getItem("notes");
     let notes = [];
     if (result !== null) notes = JSON.parse(result);
 
-    const newNotes = notes.filter(n => {
+    const newNotes = notes.filter((n) => {
       if (n.id === note.id) {
         n.title = title;
         n.desc = desc;
@@ -75,7 +75,7 @@ const NoteDetail = props => {
     });
 
     setNotes(newNotes);
-    await AsyncStorage.setItem('notes', JSON.stringify(newNotes));
+    await AsyncStorage.setItem("notes", JSON.stringify(newNotes));
   };
   const handleOnClose = () => setShowModal(false);
 
@@ -83,7 +83,24 @@ const NoteDetail = props => {
     setIsEdit(true);
     setShowModal(true);
   };
-
+  const contentNotify = (n) => {
+    const date = n.date;
+    if (date) {
+      const newDate = new Date(date);
+      let fDate =
+        newDate.getDate() +
+        "/" +
+        (newDate.getMonth() + 1) +
+        "/" +
+        newDate.getFullYear();
+      let fTime = newDate.getHours() + ":" + newDate.getMinutes();
+      setTextNotify(fTime + " - " + fDate);
+    }
+  };
+  useEffect(() => {
+    contentNotify(note);
+    console.log(1);
+  }, []);
   return (
     <>
       <ScrollView
@@ -96,14 +113,17 @@ const NoteDetail = props => {
         </Text>
         <Text style={styles.title}>{note.title}</Text>
         <Text style={styles.desc}>{note.desc}</Text>
+        {textNotify && (
+          <Text style={styles.btnNotifys}>Notify: {textNotify}</Text>
+        )}
       </ScrollView>
       <View style={styles.btnContainer}>
         <RoundIconBtn
-          antIconName='delete'
+          antIconName="delete"
           style={{ backgroundColor: colors.ERROR, marginBottom: 15 }}
           onPress={displayDeleteAlert}
         />
-        <RoundIconBtn antIconName='edit' onPress={openEditModal} />
+        <RoundIconBtn antIconName="edit" onPress={openEditModal} />
       </View>
       <NoteInputModal
         isEdit={isEdit}
@@ -124,21 +144,26 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     color: colors.PRIMARY,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   desc: {
     fontSize: 20,
     opacity: 0.6,
   },
   time: {
-    textAlign: 'right',
+    textAlign: "right",
     fontSize: 12,
     opacity: 0.5,
   },
   btnContainer: {
-    position: 'absolute',
+    position: "absolute",
     right: 15,
     bottom: 50,
+  },
+  btnNotifys: {
+    fontWeight: "bold",
+    textAlign: "right",
+    color: "#888",
   },
 });
 
