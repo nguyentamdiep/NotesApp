@@ -1,5 +1,11 @@
 # NotesApp
 
+## Các chức năng mà app hiện có:
+Thêm,xóa,sửa note.
+Tìm kiếm theo nội dung hoặc tiêu đề của note
+Thông báo nhắc nhở cho note
+Thay đổi màu nền của app và note
+
 ## Team members:
 Nhóm N04: 
 | No.  | Name                | Student ID | Email                | github username| 
