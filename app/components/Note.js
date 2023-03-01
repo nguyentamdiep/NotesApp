@@ -11,24 +11,19 @@ import {
 import colors from "../misc/colors";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const Note = ({ item, onPress, backgroundColor,onStarPress,isStarred }) => {
+const Note = ({ item, onPress, backgroundColor}) => {
   const { title, desc } = item;
-  const [starredNotes, setStarredNotes] = useState([]);
-
-  const toggleStar = (note) => {
-    if (starredNotes.includes(note)) {
-      setStarredNotes(starredNotes.filter((n) => n !== note));
-    } else {
-      setStarredNotes([...starredNotes, note]);
-    }
+  const [isFavorite, setIsFavorite] = useState(false);
+  const onStarPress = () => {
+    setIsFavorite(!isFavorite);
   };
   return (
     <TouchableOpacity onPress={onPress} style={[styles.container, {backgroundColor:backgroundColor || colors.PRIMARY}]}>
       <TouchableOpacity onPress={onStarPress}>
         <Icon
-          name={isStarred ? 'star' : 'star-o'}
+          name={isFavorite ? 'star' : 'star-o'}
           size={20}
-          color={isStarred ? 'yellow' : 'white'}
+          color={isFavorite ? 'yellow' : 'white'}
           style={styles.starIcon}
         />
       </TouchableOpacity>
