@@ -159,13 +159,14 @@ const NoteScreen = ({ user, navigation }) => {
           {resultNotFound ? (
             <NotFound />
           ) : (
-            <FlatList
+            <FlatList 
               data={reverseNotes}
-              numColumns={2}
-              columnWrapperStyle={{
-                justifyContent: 'space-between',
-                marginBottom: 15,
-              }}
+              numColumns={1}
+              
+              // columnWrapperStyle={{
+              //    justifyContent: 'center',
+              //   marginBottom: 15,
+              // }}
               keyExtractor={item => item.id.toString()}
               renderItem={({ item }) => (
                 <Note backgroundColor={colorNote} onPress={() => openNote(item)} item={item} />

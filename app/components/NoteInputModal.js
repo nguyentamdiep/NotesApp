@@ -183,9 +183,16 @@ const NoteInputModal = ({ visible, onClose, onSubmit, note, isEdit }) => {
               onClose={handleOnClose}
             />
           )}
+
           <View style={styles.btnContainer}>
             <RoundIconBtn
+              antIconName="clockcircle"
               size={15}
+              onPress={handleOnPressAlarm}
+            />
+            <RoundIconBtn
+              size={15}
+              style={{ marginLeft: 15 }}
               antIconName="check"
               onPress={handleSubmit}
             />
@@ -212,13 +219,6 @@ const NoteInputModal = ({ visible, onClose, onSubmit, note, isEdit }) => {
             onChange={onChange}
           />
         )}
-        <View>
-        <RoundIconBtn
-          antIconName="clockcircle"
-          style={styles.alarms}
-          onPress={handleOnPressAlarm}
-        />
-        </View>
       </Modal>
     </>
   );
@@ -231,6 +231,8 @@ const styles = StyleSheet.create({
   },
   input: {
     borderBottomWidth: 2,
+    //alignItems:'flex-start',
+    //marginStart: 10,
     borderBottomColor: colors.PRIMARY,
     fontSize: 20,
     color: colors.DARK,
@@ -241,7 +243,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   desc: {
-    height: 100,
+    height: "60%",
   },
   modalBG: {
     flex: 1,
@@ -259,7 +261,7 @@ const styles = StyleSheet.create({
     width: 54,
     maxHeight: 54,
     color: colors.DARK,
-    backgroundColor: "#FFF",
+    backgroundColor: "gray",
   },
 });
 
