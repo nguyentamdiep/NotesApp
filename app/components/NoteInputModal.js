@@ -15,6 +15,11 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import Alarm from "./Alarm";
+import {
+  actions,
+  RichEditor,
+  RichToolbar,
+} from "react-native-pell-rich-editor";
 const NoteInputModal = ({ visible, onClose, onSubmit, note, isEdit }) => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");

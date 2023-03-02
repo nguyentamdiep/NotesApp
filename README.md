@@ -26,5 +26,6 @@ npm install react-native-radio-buttons-group
 expo install expo-notifications
 expo install expo-device
 npm install @react-native-community/datetimepicker --save
+npm i react-native-pell-rich-editor
 npx expo start
 ```
