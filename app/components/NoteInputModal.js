@@ -175,6 +175,7 @@ const NoteInputModal = ({ visible, onClose, onSubmit, note, isEdit }) => {
           <TextInput
             value={desc}
             multiline
+            textAlignVertical="top"
             placeholder="Note"
             style={[styles.input, styles.desc]}
             onChangeText={(text) => handleOnChangeText(text, "desc")}
