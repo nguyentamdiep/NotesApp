@@ -112,7 +112,7 @@ const ColorPaletteModal = ({visible, onClose, onSelect}) => {
             radioButtons={radioButtons} 
             onPress={onPressRadioButton} 
         />
-            <Text style={styles.modalText}>Select Color Note:</Text>
+            <Text style={styles.modalText}>Select Color:</Text>
             <View style={styles.row}>
                 
               <Pressable

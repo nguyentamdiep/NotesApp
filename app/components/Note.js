@@ -97,7 +97,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Note = ({ item, onPress, backgroundColor }) => {
-  const { title, desc } = item;
+  const { title, desc, time, isUpdated } = item;
   const [isFavorite, setIsFavorite] = useState(false);
 
   // Lấy giá trị từ AsyncStorage khi component render
@@ -128,6 +128,18 @@ const Note = ({ item, onPress, backgroundColor }) => {
     }
   };
 
+  const formatDate = (ms) => {
+    const date = new Date(ms);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const hrs = date.getHours();
+    const min = date.getMinutes();
+    const sec = date.getSeconds();
+  
+    return `${day}/${month}/${year} - ${hrs}:${min}:${sec}`;
+  };
+
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -144,7 +156,14 @@ const Note = ({ item, onPress, backgroundColor }) => {
       <Text style={styles.title} numberOfLines={2}>
         {title}
       </Text>
-      <Text numberOfLines={3}>{desc}</Text>
+      <Text numberOfLines={4}>{desc}</Text>
+      <Text style = {styles.time}>
+        {
+          isUpdated 
+          ? `Updated at ${formatDate(time)}`
+          : `Created at ${formatDate(time)}`
+        }
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -166,6 +185,12 @@ const styles = StyleSheet.create({
   },
   starIcon: {
     marginRight: 10,
+  },
+
+  time: {
+   // textAlign: "right",
+    fontSize: 12,
+    opacity: 0.5,
   },
 });
 
