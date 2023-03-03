@@ -1,12 +1,14 @@
 # NotesApp
 
 ## Các chức năng mà app hiện có:
-Thêm,xóa,sửa note.
-</br><br>
-Tìm kiếm theo nội dung hoặc tiêu đề của note
-Thông báo nhắc nhở cho note
-Thay đổi màu nền của app và note
-
+- Thêm, xóa, sửa note
+- Tìm kiếm theo nội dung hoặc tiêu đề của note
+- Thông báo nhắc nhở khi đến hẹn (khi người dùng cài đặt báo thức và thoát ra khỏi app)
+- Đánh sao cho những ghi chú quan trọng 
+- Tìm kiếm ghi chú theo nội dung hoặc tiêu đề
+- Thay đổi màu nền của app và note
+- Thay đổi định dạng,thêm đường dẫn và thêm ảnh cho note
+- Sắp xếp ghi chú theo thứ tự từ gần nhất đến trễ nhất và ngược lại
 ## Team members:
 Nhóm N04: 
 | No.  | Name                | Student ID | Email                | github username| 
