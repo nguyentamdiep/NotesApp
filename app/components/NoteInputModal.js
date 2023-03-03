@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
+  ScrollView
 } from "react-native";
 import colors from "../misc/colors";
 import RoundIconBtn from "./RoundIconBtn";
@@ -20,6 +21,8 @@ import {
   RichEditor,
   RichToolbar,
 } from "react-native-pell-rich-editor";
+import * as ImagePicker from "expo-image-picker";
+
 const NoteInputModal = ({ visible, onClose, onSubmit, note, isEdit }) => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -32,6 +35,8 @@ const NoteInputModal = ({ visible, onClose, onSubmit, note, isEdit }) => {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
+  const [image, setImage] = useState(null);
+
   const handleModalClose = () => {
     Keyboard.dismiss();
   };
@@ -59,6 +64,18 @@ const NoteInputModal = ({ visible, onClose, onSubmit, note, isEdit }) => {
   const showMode = (currentMode) => {
     setShow(true);
     setMode(currentMode);
+  };
+
+  const richText = useRef();
+
+  const richTextHandle = (descriptionText) => {
+    console.log("descriptionText", descriptionText);
+    console.log("desc", desc);
+    if (descriptionText) {
+      setDesc(descriptionText);
+    } else {
+      setDesc("");
+    }
   };
   const handleOnPressAlarm = () => {
     Keyboard.dismiss();
@@ -113,6 +130,7 @@ const NoteInputModal = ({ visible, onClose, onSubmit, note, isEdit }) => {
         notificationListener.current
       );
       Notifications.removeNotificationSubscription(responseListener.current);
+      getMediaLibraryPermission();
     };
   }, [isEdit]);
   async function scheduleNotification() {
@@ -134,6 +152,26 @@ const NoteInputModal = ({ visible, onClose, onSubmit, note, isEdit }) => {
 
   const handleOnClose = () => {
     setDate(date), setIsAlarms(false);
+  };
+  const getMediaLibraryPermission = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      alert("Permission to access media library is required!");
+    }
+  };
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      const uri = result.assets[0].uri;
+      console.log(uri);
+      richText.current?.insertImage(uri);
+    }
   };
   const handleOnChangeText = (text, valueFor) => {
     if (valueFor === "title") setTitle(text);
@@ -172,13 +210,43 @@ const NoteInputModal = ({ visible, onClose, onSubmit, note, isEdit }) => {
             placeholder="Title"
             style={[styles.input, styles.title]}
           />
-          <TextInput
+          {/* <TextInput
             value={desc}
             multiline
             placeholder="Note"
             style={[styles.input, styles.desc]}
             onChangeText={(text) => handleOnChangeText(text, "desc")}
-          />
+          /> */}
+          <ScrollView style={[styles.input, styles.desc]}>
+                    <RichToolbar
+                        editor={richText}
+                        selectedIconTint="#873c1e"
+                        iconTint="#312921"
+                        actions={[
+                        actions.insertImage,
+                        actions.setBold,
+                        actions.setItalic,
+                        actions.checkboxList,
+                        actions.insertBulletsList,
+                        actions.insertOrderedList,
+                        actions.insertLink,
+                        actions.setStrikethrough,
+                        actions.setUnderline,
+                        ]}
+                        onPressAddImage={pickImage}
+                        style={styles.richTextToolbarStyle} />
+            
+                    <RichEditor
+                        onFocus={()=>setSelectColors(false)}
+                        ref={richText}
+                        initialContentHTML={desc}
+                        onChange={richTextHandle}
+                        placeholder="Note :)"
+                        initialHeight={250}
+                        //editorStyle = {styleEditor}
+                        allowFileAccess={true}
+                    />
+                </ScrollView>
           {isalarms && (
             <Alarm
               date={date}

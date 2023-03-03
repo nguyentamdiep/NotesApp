@@ -1,11 +1,17 @@
-import React, { useState,useEffect } from "react";
-import { ScrollView, StyleSheet, Text, View, Alert } from "react-native";
+import React, { useState, useEffect,useRef } from "react";
+import { ScrollView, StyleSheet, Text, View, Alert,Dimensions } from "react-native";
 import { useHeaderHeight } from "@react-navigation/elements";
 import colors from "../misc/colors";
 import RoundIconBtn from "./RoundIconBtn";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNotes } from "../contexts/NoteProvider";
 import NoteInputModal from "./NoteInputModal";
+import {
+  actions,
+  RichEditor,
+  RichToolbar,
+} from "react-native-pell-rich-editor";
+
 const formatDate = (ms) => {
   const date = new Date(ms);
   const day = date.getDate();
@@ -25,6 +31,8 @@ const NoteDetail = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [textNotify, setTextNotify] = useState("");
+  const richText = useRef();
+  const height_window = Dimensions.get('window').height - 160
 
   const deleteNote = async () => {
     const result = await AsyncStorage.getItem("notes");
@@ -68,7 +76,7 @@ const NoteDetail = (props) => {
         n.desc = desc;
         n.isUpdated = true;
         n.time = time;
-
+        contentNotify(n);
         setNote(n);
       }
       return n;
@@ -97,6 +105,26 @@ const NoteDetail = (props) => {
       setTextNotify(fTime + " - " + fDate);
     }
   };
+
+  const extractImageSource = (htmlString) => {
+    const regex = /<img.*?src="(.*?)"/; 
+    const match = regex.exec(htmlString);
+    if (match && match[1]) {
+      return match[1]; 
+    }
+    return null;
+  };
+
+  const imageSource = extractImageSource(note.desc);
+
+  useEffect(() => {
+    contentNotify(note);
+    console.log(1);
+  }, []);
+
+  const styleEditor = {
+    backgroundColor: note.color,
+  };
   useEffect(() => {
     contentNotify(note);
     console.log(1);
@@ -112,7 +140,20 @@ const NoteDetail = (props) => {
             : `Created At ${formatDate(note.time)}`}
         </Text>
         <Text style={styles.title}>{note.title}</Text>
-        <Text style={styles.desc}>{note.desc}</Text>
+        {/* <Text style={styles.desc}>{note.desc}</Text> */}
+        <ScrollView style={{backgroundColor: note.color}}>
+          <RichEditor
+            ref={richText}
+            initialContentHTML={note.desc}
+            style={styles.richTextEditorStyle}
+            initialHeight={height_window}
+            insertImage= {imageSource}
+            allowFileAccess={true}
+            editorStyle = {styleEditor}
+            disabled={true}
+          />
+        </ScrollView>
+
         {textNotify && (
           <Text style={styles.btnNotifys}>Notify: {textNotify}</Text>
         )}
